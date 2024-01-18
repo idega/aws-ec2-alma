@@ -34,12 +34,12 @@ sudo systemctl daemon-reload
 #
 # Cleaning intial configuration
 #
-mysql_install_db --user=mysql
-chcon -R system_u:object_r:mysqld_db_t:s0 /var/lib/mysql/
-rm -rf /var/lib/mysql/ib_logfile*
-service mariadb restart;
+sudo mysql_install_db --user=mysql
+sudo chcon -R system_u:object_r:mysqld_db_t:s0 /var/lib/mysql/
+sudo rm -rf /var/lib/mysql/ib_logfile*
+sudo service mariadb restart;
 
 #
 # Actual installation
 #
-mysql_secure_installation;
+sudo mysql_secure_installation;
