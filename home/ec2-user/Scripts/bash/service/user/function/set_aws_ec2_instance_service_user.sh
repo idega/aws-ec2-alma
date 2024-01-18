@@ -21,7 +21,7 @@ function set_aws_ec2_instance_service_user_ssh_access() {
     sudo restorecon -F -R /opt/$1/.ssh
 }
 
-export function set_aws_ec2_instance_service_user() {
+function set_aws_ec2_instance_service_user() {
     sudo useradd \
         --home-dir /opt/$aws_ec2_instance_service_user_name \
         --shell /sbin/nologin $aws_ec2_instance_service_user_name
