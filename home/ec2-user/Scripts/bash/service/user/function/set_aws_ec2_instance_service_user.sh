@@ -21,13 +21,12 @@ function set_aws_ec2_instance_service_user_ssh_access() {
     sudo restorecon -F -R /opt/$1/.ssh
 }
 
-for aws_ec2_instance_service_user_name in "${AWS_EC2_INSTANCE_SERVICE_USER_NAMES[@]}"; do 
+export function set_aws_ec2_instance_service_user() {
     sudo useradd \
         --home-dir /opt/$aws_ec2_instance_service_user_name \
         --shell /sbin/nologin $aws_ec2_instance_service_user_name
-    sudo usermod \
-        -aG $AWS_EC2_INSTANCE_SFTP_GROUP_NAME $aws_ec2_instance_service_user_name
+    sudo usermod -aG $AWS_EC2_INSTANCE_SFTP_GROUP_NAME $aws_ec2_instance_service_user_name
     set_aws_ec2_service_user_password $aws_ec2_instance_service_user_name
     set_aws_ec2_instance_service_user_ssh_access $aws_ec2_instance_service_user_name
     set_aws_ec2_instance_service_user_sftp_directory $aws_ec2_instance_service_user_name $AWS_EC2_INSTANCE_SFTP_GROUP_NAME
-done
+}
