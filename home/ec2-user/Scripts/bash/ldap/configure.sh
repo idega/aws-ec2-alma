@@ -8,27 +8,26 @@ function inialize_aws_ec2_instance_ldap_database() {
 }
 
 function copy_aws_ec2_instance_ldap_configuration_files() {
-    cp ../../../../etc/openldap/slapd.d/* /etc/openldap/slapd.d/
-    chown ldap:ldap /etc/openldap/slapd.d/*.ldif 
-    chmod go-rwx /etc/openldap/slapd.d/*.ldif 
-    restorecon -F /etc/openldap/slapd.d/*.ldif
+    sudo cp ../../../../etc/openldap/slapd.d/* /etc/openldap/slapd.d/
+    sudo chown -R ldap:ldap /etc/openldap/slapd.d 
+    sudo chmod -R go-rwx /etc/openldap/slapd.d
+    sudo restorecon -R -F /etc/openldap/slapd.d/
 }
 
 function set_aws_ec2_instance_ldap_admin_password() {
     local password=$(date | base64)
     local hash=$(slappasswd -s $password)
     sudo sed -i "s/olcRootPW: .*/olcRootPW: ${hash}/g" /etc/openldap/slapd.d/ldap.idega.is.ldif
-    echo "LDAP administrator hash is: $hash"
     echo "LDAP administrator password is: $password"
 }
 
 function load_aws_ec2_instance_ldap_configuration() {
-    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
-    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
-    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
-    ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/ldap.idega.is.ldif
-    ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/domain.ldif;
-    ldapadd -x -D cn=ldapadm,dc=ldap,dc=idega,dc=is -W -f /etc/openldap/slapd.d/base.ldif
+    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
+    sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/ldap.idega.is.ldif
+    sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/domain.ldif;
+    sudo ldapadd -x -D cn=ldapadm,dc=ldap,dc=idega,dc=is -W -f /etc/openldap/slapd.d/base.ldif
 }
 
 inialize_aws_ec2_instance_ldap_database

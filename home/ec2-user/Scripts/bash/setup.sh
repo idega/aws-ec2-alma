@@ -10,6 +10,7 @@ source service/user/function/set_aws_ec2_instance_service_user.sh
 ./s3/install.sh
 ./jdk/install.sh
 ./ldap/install.sh
+./openscap/install.sh
 
 #
 # Software configuration
@@ -27,3 +28,8 @@ source service/user/function/set_aws_ec2_instance_service_user.sh
 for aws_ec2_instance_service_user_name in "${AWS_EC2_INSTANCE_SERVICE_USER_NAMES[@]}"; do 
     set_aws_ec2_instance_service_user $aws_ec2_instance_service_user_name
 done
+
+#
+# Securing
+# 
+./openscap/remediate.sh
