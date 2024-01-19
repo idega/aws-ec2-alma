@@ -1,35 +1,32 @@
 #!/bin/bash
-#
-# Script finds new WAR files and moves it to Tomcat
-#
-WAR_FILE_OWNER=app
-TOMCAT_HOME=/opt/$WAR_FILE_OWNER/tomcat
-SFTP_FOLDER=/var/local/sftp/$WAR_FILE_OWNER/wars
+function install_iw_app_war_file() {
+    local iw_tomcat_home_dir=/opt/$1/tomcat
+    local iw_service_user_sftp_dir=/var/local/sftp/$1/wars
 
-if [ -z "$(ls -A $SFTP_FOLDER/*.war)" ]; then
-        echo "No WAR file found. No updates required."
-else
-        for WAR_FILE_PATH in $(ls $SFTP_FOLDER/*.war); do
-                WAR_FILE_NAME="$(basename "$WAR_FILE_PATH" .war)"
-                echo "Processing update for $WAR_FILE_NAME ...";
+    for iw_war_file_path in $(ls $iw_service_user_sftp_dir/*.war); do
+        if [ -f "$iw_war_file_path" ]; then
+            iw_war_file_name="$(basename "$iw_war_file_path" .war)"
+            echo "Processing update for $iw_war_file_name ...";
 
-                echo "Removing old WAR... "
-                rm -rf $TOMCAT_HOME/webapps/$WAR_FILE_NAME*
+            echo "Removing old WAR... "
+            rm -rf $iw_tomcat_home_dir/webapps/$iw_war_file_name*
 
-                echo "Extracting $WAR_FILE_PATH file..."
-                unzip $WAR_FILE_PATH -d $TOMCAT_HOME/webapps/$WAR_FILE_NAME
+            echo "Extracting $iw_war_file_path file..."
+            unzip $iw_war_file_path -d $iw_tomcat_home_dir/webapps/$iw_war_file_name
 
-                echo "Touching files..."
-                find $TOMCAT_HOME/webapps/$WAR_FILE_NAME ! -name . -prune -type d -exec touch {} +
+            echo "Touching files..."
+            find $iw_tomcat_home_dir/webapps/$iw_war_file_name ! -name . -prune -type d -exec touch {} +
 
-                echo "Restoring reading rights..."
-                chown -R $WAR_FILE_OWNER:$WAR_FILE_OWNER $TOMCAT_HOME/webapps/$WAR_FILE_NAME
-                restorecon -F -R $TOMCAT_HOME/webapps/$WAR_FILE_NAME
+            echo "Restoring reading rights..."
+            chown -R $1:$1 $iw_tomcat_home_dir/webapps/$iw_war_file_name
+            restorecon -F -R $iw_tomcat_home_dir/webapps/$iw_war_file_name
 
-                echo "Removing $WAR_FILE_PATH file..."
-                rm -f $WAR_FILE_PATH
-        done
-fi
+            echo "Removing $iw_war_file_path file..."
+            rm -f $iw_war_file_path
+        fi
+    done
+}
 
-echo "Starting server..."
-.$TOMCAT_HOME/bin/startup.sh
+
+install_iw_app_war_file $(id -un)
+./opt/$(id -un)/tomcat/bin/startup.sh

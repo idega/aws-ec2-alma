@@ -1,6 +1,9 @@
 #!/bin/bash
 source variables/export.sh
 source service/user/function/set_aws_ec2_instance_service_user.sh
+source tomcat/function/download_iw_tomcat_server.sh
+source tomcat/function/copy_iw_tomcat_server_update_script.sh
+source tomcat/function/create_iw_tomcat_service_configuration.sh
 
 #
 # Software installation
@@ -25,9 +28,21 @@ source service/user/function/set_aws_ec2_instance_service_user.sh
 #
 ./admin/create.sh
 
-for aws_ec2_instance_service_user_name in "${AWS_EC2_INSTANCE_SERVICE_USER_NAMES[@]}"; do 
-    set_aws_ec2_instance_service_user $aws_ec2_instance_service_user_name
+for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
+    set_aws_ec2_instance_service_user $iw_tomcat_service_user_name
 done
+
+#
+# Tomcat
+#
+for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
+    download_iw_tomcat_server $iw_tomcat_service_user_name
+    copy_iw_tomcat_server_update_script $iw_tomcat_service_user_name
+    create_iw_tomcat_service_configuration $iw_tomcat_service_user_name
+done
+
+sudo setsebool tomcat_can_network_connect_db on
+sudo setsebool -P tomcat_can_network_connect_db on
 
 #
 # Securing

@@ -2,6 +2,7 @@
 sudo yum -y install epel-release
 sudo yum -y install \
     bc \
+    elinks \
     git \
     htop \
     nginx \
@@ -11,4 +12,4 @@ sudo yum -y install \
     screen \
     vim \
     wget \
-    unzip        
+    unzip
