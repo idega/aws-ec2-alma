@@ -6,18 +6,18 @@
 
 	<!--
 	========================= Resource options =============================
-	name:   
+	name:
 			The name of the resource to be created, 
 			relative to the java:comp/env context.
 
 	description:    
 			Optional, human-readable description of this resource.
 
-	type:   
+	type:
 			The fully qualified Java class name expected by the web 
 			application when it performs a lookup for this resource.
 
-	auth:   
+	auth:
 			Specify whether the web Application code signs on to the 
 			corresponding resource manager programatically, 
 			or whether the Container will sign on to the resource manager 
@@ -28,7 +28,7 @@
 			if the application uses a <resource-env-ref> instead.
 
 	===================== Basic Pool Configuration =========================
-	acquireIncrement:       
+	acquireIncrement: 
 			Determines how many connections at a time c3p0 will try to
 			acquire when the pool is exhausted.
 

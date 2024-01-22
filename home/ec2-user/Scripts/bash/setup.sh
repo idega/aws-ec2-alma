@@ -13,6 +13,7 @@ source tomcat/function/create_iw_tomcat_service_configuration.sh
 ./s3/install.sh
 ./jdk/install.sh
 ./ldap/install.sh
+./nginx/install.sh
 ./openscap/install.sh
 
 #
@@ -22,6 +23,8 @@ source tomcat/function/create_iw_tomcat_service_configuration.sh
 ./sftp/configure.sh
 ./s3/configure.sh
 ./ldap/configure.sh
+./nginx/configure.sh
+./tomcat/configure.sh
 
 #
 # Users
@@ -29,20 +32,20 @@ source tomcat/function/create_iw_tomcat_service_configuration.sh
 ./admin/create.sh
 
 for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
-    set_aws_ec2_instance_service_user $iw_tomcat_service_user_name
-done
 
-#
-# Tomcat
-#
-for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
+    # Tomcat service user
+    set_aws_ec2_instance_service_user $iw_tomcat_service_user_name
+
+    # Tomcat service
     download_iw_tomcat_server $iw_tomcat_service_user_name
     copy_iw_tomcat_server_update_script $iw_tomcat_service_user_name
     create_iw_tomcat_service_configuration $iw_tomcat_service_user_name
-done
+    sudo systemctl enable $iw_tomcat_service_user_name
+    sudo systemctl restart $iw_tomcat_service_user_name
 
-sudo setsebool tomcat_can_network_connect_db on
-sudo setsebool -P tomcat_can_network_connect_db on
+    # Tomcat domain
+    copy_iw_app_nginx_configuration $iw_tomcat_service_user_name
+done
 
 #
 # Securing
