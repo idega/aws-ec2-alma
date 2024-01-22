@@ -8,7 +8,7 @@ function copy_iw_app_nginx_configuration() {
     sudo chown nginx:nginx $iw_app_ui_path
     sudo restorecon -F -R $iw_app_ui_path
 
-    sudo envsubstr < ../../../../etc/nginx/nginx.template.conf > /etc/nginx/conf.d/$iw_app_domain.conf
+    envsubstr < $IW_SCRIPT_CONF_DIR/etc/nginx/conf.d/nginx.template.conf > /etc/nginx/conf.d/$iw_app_domain.conf
 
     echo "127.0.0.1 $iw_app_domain" | sudo tee --append /etc/hosts
 

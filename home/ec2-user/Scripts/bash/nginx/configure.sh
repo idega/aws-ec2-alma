@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo cp ../../../../etc/nginx/gzip.conf /etc/nginx/conf.d/
+sudo cp $IW_SCRIPT_CONF_DIR/etc/nginx/conf.d/gzip.conf /etc/nginx/conf.d/

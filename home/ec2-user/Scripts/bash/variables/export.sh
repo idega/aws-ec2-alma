@@ -1,4 +1,6 @@
 #!/bin/bash
+export IW_SCRIPT_CONF_DIR=$(builtin cd "../../../../"; pwd)
+
 export readonly AWS_EC2_INSTANCE_ADMIN_USERNAME=idegaweb
 
 # SFTP
