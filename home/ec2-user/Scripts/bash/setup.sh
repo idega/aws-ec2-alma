@@ -6,7 +6,7 @@ source tomcat/function/download_iw_tomcat_server.sh
 source tomcat/function/copy_iw_tomcat_server_update_script.sh
 source tomcat/function/create_iw_tomcat_service_configuration.sh
 source tomcat/function/create_iw_tomcat_service_root_configuration.sh
-soruce maria/function/create_iw_service_database.sh
+source maria/function/create_iw_service_database.sh
 source nginx/function/copy_iw_app_nginx_configuration.sh
 
 #
