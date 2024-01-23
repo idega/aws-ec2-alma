@@ -46,6 +46,9 @@ for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do
 
     # Tomcat domain
     copy_iw_app_nginx_configuration $iw_tomcat_service_user_name
+
+    # Certbot
+    sudo certbot --nginx
 done
 
 #
