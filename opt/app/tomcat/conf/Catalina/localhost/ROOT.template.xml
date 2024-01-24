@@ -183,7 +183,7 @@
 
 		user="${IW_TOMCAT_SERVICE_DB_USER_NAME}"
 		password="${IW_TOMCAT_SERVICE_DB_PASSWORD}"
-		jdbcUrl="jdbc:mysql://127.0.0.1:3306/${IW_TOMCAT_SERVICE_DB_USER_NAME}?autoReconnect=true"
-		driverClass="org.postgresql.Driver"
-		factory="com.mysql.jdbc.Driver"/>
+		jdbcUrl="jdbc:mariadb://127.0.0.1:3306/${IW_TOMCAT_SERVICE_DB_USER_NAME}?autoReconnect=true"
+		driverClass="org.mariadb.jdbc.Driver"
+		factory="org.apache.naming.factory.BeanFactory"/>
 </Context>
