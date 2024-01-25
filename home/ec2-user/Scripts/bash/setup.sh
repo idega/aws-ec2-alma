@@ -8,6 +8,7 @@ source tomcat/function/create_iw_tomcat_service_configuration.sh
 source tomcat/function/create_iw_tomcat_service_root_configuration.sh
 source maria/function/create_iw_service_database.sh
 source nginx/function/copy_iw_app_nginx_configuration.sh
+source service/backup/function/create_iw_service_backup_script.sh
 
 #
 # Software installation
@@ -54,6 +55,11 @@ for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do
     export readonly IW_TOMCAT_SERVICE_DB_PASSWORD=$(openssl rand -base64 32)
     create_iw_service_database
     create_iw_tomcat_service_root_configuration $iw_tomcat_service_user_name
+    create_iw_service_backup_script \
+        $iw_tomcat_service_user_name
+        $IW_TOMCAT_SERVICE_DB_USER_NAME \
+        $IW_TOMCAT_SERVICE_DB_USER_NAME \
+        $IW_TOMCAT_SERVICE_DB_PASSWORD
     unset IW_TOMCAT_SERVICE_DB_USER_NAME
     unset IW_TOMCAT_SERVICE_DB_PASSWORD
 
