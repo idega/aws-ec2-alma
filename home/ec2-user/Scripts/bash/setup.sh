@@ -56,7 +56,7 @@ for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do
     create_iw_service_database
     create_iw_tomcat_service_root_configuration $iw_tomcat_service_user_name
     create_iw_service_backup_script \
-        $iw_tomcat_service_user_name
+        $iw_tomcat_service_user_name \
         $IW_TOMCAT_SERVICE_DB_USER_NAME \
         $IW_TOMCAT_SERVICE_DB_USER_NAME \
         $IW_TOMCAT_SERVICE_DB_PASSWORD

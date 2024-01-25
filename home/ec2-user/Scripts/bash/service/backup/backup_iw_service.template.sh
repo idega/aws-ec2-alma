@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IW_SERVICE_BACKUP_FOLDER="/opt/$iw_service_name/backup/$(date +%Y-%m-%d)";
+IW_SERVICE_BACKUP_FOLDER="$HOME/Backup/$iw_service_name/$(date +%Y-%m-%d)";
 
 function create_iw_service_db_backup() {
     local iw_db_dump_file_path="$IW_SERVICE_BACKUP_FOLDER/db.sql.gz";
@@ -21,7 +21,7 @@ function create_iw_service_repo_backup() {
     sudo tar -zcf $iw_repo_archive_path $iw_repo_path;
 }
 
-sudo mkdir -p $IW_SERVICE_BACKUP_FOLDER
+mkdir -p $IW_SERVICE_BACKUP_FOLDER
 create_iw_service_db_backup
 create_iw_service_repo_backup
 s3cmd put --recursive $IW_SERVICE_BACKUP_FOLDER/* "s3://ec2-backup-$iw_service_domain/$(date +%Y-%m-%d)/"
