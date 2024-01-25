@@ -1,5 +1,5 @@
 #!/bin/bash
-export IW_SCRIPT_CONF_DIR=$(builtin cd "../../../../"; pwd)
+export IW_ALMA_CONFIGURATION_HOME=$HOME/aws-ec2-alma
 
 export readonly AWS_EC2_INSTANCE_ADMIN_USERNAME=idegaweb
 

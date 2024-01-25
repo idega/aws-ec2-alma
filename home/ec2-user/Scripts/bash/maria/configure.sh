@@ -10,7 +10,7 @@ ln -s /dev/null $HOME/.mysql_history;
 # Cloning default configuration
 #
 sudo systemctl stop mariadb
-sudo cp $IW_SCRIPT_CONF_DIR/etc/my.cnf.d/* /etc/my.cnf.d/
+sudo cp $IW_ALMA_CONFIGURATION_HOME/etc/my.cnf.d/* /etc/my.cnf.d/
 sudo restorecon -F /etc/my.cnf.d/*
 sudo chmod o+r /etc/my.cnf.d/*
 sudo chown root:root /etc/my.cnf.d/*

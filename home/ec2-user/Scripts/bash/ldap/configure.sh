@@ -8,7 +8,7 @@ function inialize_aws_ec2_instance_ldap_database() {
 }
 
 function copy_aws_ec2_instance_ldap_configuration_files() {
-    sudo cp $IW_SCRIPT_CONF_DIR/etc/openldap/slapd.d/* /etc/openldap/slapd.d/
+    sudo cp $IW_ALMA_CONFIGURATION_HOME/etc/openldap/slapd.d/* /etc/openldap/slapd.d/
     sudo chown -R ldap:ldap /etc/openldap/slapd.d 
     sudo chmod -R go-rwx /etc/openldap/slapd.d
     sudo restorecon -R -F /etc/openldap/slapd.d/
