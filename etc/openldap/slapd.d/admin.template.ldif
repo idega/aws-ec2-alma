@@ -11,4 +11,4 @@ olcRootDN: cn=${IW_LDAP_SERVICE_ADMIN},dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_L
 dn: olcDatabase={2}mdb,cn=config
 changetype: modify
 replace: olcRootPW
-olcRootPW: {SSHA} ${IW_LDAP_SERVICE_PASS_HASH}
+olcRootPW: ${IW_LDAP_SERVICE_PASS_HASH}
