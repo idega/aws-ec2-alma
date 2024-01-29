@@ -11,6 +11,15 @@ export readonly AWS_EC2_INSTANCE_SFTP_DIRECTORY=/var/local/$AWS_EC2_INSTANCE_SFT
 export readonly AWS_S3_JDK_INSTALLATION_FILE_NAME=jdk-8u251-linux-x64.rpm
 export readonly AWS_S3_JDK_INSTALLATION_PATH=s3://aws-ec2-instance-setup/jdk/$AWS_S3_JDK_INSTALLATION_FILE_NAME
 
+# LDAP
+export readonly IW_LDAP_SERVICE_ADMIN=ldapadm
+export readonly IW_LDAP_SERVICE_GROUP_UNIT=Groups
+export readonly IW_LDAP_SERVICE_USERS_UNIT=Users
+
+export readonly IW_LDAP_SERVICE_SUBDOMAIN=ldap
+export readonly IW_LDAP_SERVICE_DOMAIN=idega
+export readonly IW_LDAP_SERVICE_EXTENSION=is
+
 # Tomcat services
 export readonly IW_TOMCAT_DOWNLOAD_URL="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.99/bin/apache-tomcat-7.0.99.tar.gz"
 export readonly IW_TOMCAT_INSTALLATION_ARCHIVE="apache-tomcat-7.0.99.tar.gz"

@@ -1,4 +1,0 @@
-dn: cn=config
-changetype: modify
-replace: olcReferral
-olcReferral: ldap://ldap.idega.is

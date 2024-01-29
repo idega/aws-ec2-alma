@@ -1,0 +1,14 @@
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}
+
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=${IW_LDAP_SERVICE_ADMIN},dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}
+
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: {SSHA} ${IW_LDAP_SERVICE_PASS_HASH}

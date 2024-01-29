@@ -1,0 +1,4 @@
+dn: olcDatabase={1}monitor,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external, cn=auth" read by dn.base="cn=${IW_LDAP_SERVICE_ADMIN},dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}" read by * none

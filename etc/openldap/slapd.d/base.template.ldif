@@ -1,0 +1,28 @@
+# Root
+dn: dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}
+description: LDAP BaseDN
+dc: ${IW_LDAP_SERVICE_SUBDOMAIN}
+o: ${IW_LDAP_SERVICE_SUBDOMAIN}.${IW_LDAP_SERVICE_DOMAIN}.${IW_LDAP_SERVICE_EXTENSION}
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+
+# Administrator
+dn: cn=${IW_LDAP_SERVICE_ADMIN},dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}
+objectClass: organizationalRole
+cn: ${IW_LDAP_SERVICE_ADMIN}
+description: LDAP administrator
+
+# Subtree for Users
+dn: ou=${IW_LDAP_SERVICE_USERS_UNIT},dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}
+ou: ${IW_LDAP_SERVICE_USERS_UNIT}
+description: Parent Ldap Users
+objectClass: organizationalUnit
+objectClass: top
+
+# Subtree for Groups
+dn: ou=${IW_LDAP_SERVICE_GROUP_UNIT},dc=${IW_LDAP_SERVICE_SUBDOMAIN},dc=${IW_LDAP_SERVICE_DOMAIN},dc=${IW_LDAP_SERVICE_EXTENSION}
+ou: ${IW_LDAP_SERVICE_GROUP_UNIT}
+description: Parent LDAP Groups
+objectClass: organizationalUnit
+objectClass: top
