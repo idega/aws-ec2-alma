@@ -11,6 +11,9 @@ function create_iw_service_db_backup() {
         --password=$iw_db_user_pass \
         --default-character-set=utf8 \
         --max_allowed_packet=1024M \
+        --extended-insert \
+        --complete-insert \
+        --replace \
         --single-transaction $iw_db_name | gzip -9 > $iw_db_dump_file_path;
 }
 
