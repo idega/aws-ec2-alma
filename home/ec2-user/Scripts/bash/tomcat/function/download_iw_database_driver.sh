@@ -7,5 +7,5 @@ function download_iw_database_driver() {
     # sudo chmod -R go-rwx $tomcat_installation_lib_dir
     # sudo restorecon -F -R $tomcat_installation_lib_dir
 
-    ln -s /usr/lib/java/mariadb-java-client.jar $tomcat_installation_lib_dir
+    sudo -u $1 ln -s /usr/lib/java/mariadb-java-client.jar $tomcat_installation_lib_dir
 }

@@ -16,13 +16,6 @@ sudo chmod o+r /etc/my.cnf.d/*
 sudo chown root:root /etc/my.cnf.d/*
 
 #
-# Configuring database logs
-#
-sudo mkdir /var/log/mariadb;
-sudo chown mysql:mysql /var/log/mariadb/;
-sudo restorecon -R -F /var/log/mariadb/;
-
-#
 # Configuring limits
 #
 echo "mysql soft nofile 32768" | sudo tee --append /etc/security/limits.conf
@@ -35,7 +28,7 @@ sudo systemctl daemon-reload
 # Cleaning intial configuration
 #
 sudo mysql_install_db --user=mysql
-sudo chcon -R system_u:object_r:mysqld_db_t:s0 /var/lib/mysql/
+sudo restorecon -F -R /var/lib/mysql/
 sudo rm -rf /var/lib/mysql/ib_logfile*
 sudo service mariadb restart;
 

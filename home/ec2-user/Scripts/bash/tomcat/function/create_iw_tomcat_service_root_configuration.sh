@@ -7,6 +7,7 @@ function create_iw_tomcat_service_root_configuration() {
     mkdir -p $iw_root_folder_path
     envsubst '$IW_TOMCAT_SERVICE_DB_USER_NAME,$IW_TOMCAT_SERVICE_DB_PASSWORD' < $iw_root_template_path > $iw_root_folder_path/ROOT.xml
 
+    sudo mkdir -p $iw_tomcat_service_catalina_path
     sudo mv $iw_root_folder_path/ROOT.xml $iw_tomcat_service_catalina_path
     sudo chown -R root:$1 $iw_tomcat_service_catalina_path
     sudo chmod -R o-rx $iw_tomcat_service_catalina_path

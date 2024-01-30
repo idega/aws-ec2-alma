@@ -23,10 +23,10 @@ function set_aws_ec2_instance_service_user_ssh_access() {
 
 function set_aws_ec2_instance_service_user() {
     sudo useradd \
-        --home-dir /opt/$aws_ec2_instance_service_user_name \
-        --shell /sbin/nologin $aws_ec2_instance_service_user_name
-    sudo usermod -aG $AWS_EC2_INSTANCE_SFTP_GROUP_NAME $aws_ec2_instance_service_user_name
-    set_aws_ec2_service_user_password $aws_ec2_instance_service_user_name
-    set_aws_ec2_instance_service_user_ssh_access $aws_ec2_instance_service_user_name
-    set_aws_ec2_instance_service_user_sftp_directory $aws_ec2_instance_service_user_name $AWS_EC2_INSTANCE_SFTP_GROUP_NAME
+        --home-dir /opt/$1 \
+        --shell /sbin/nologin $1
+    sudo usermod -aG $AWS_EC2_INSTANCE_SFTP_GROUP_NAME $1
+    set_aws_ec2_service_user_password $1
+    set_aws_ec2_instance_service_user_ssh_access $1
+    set_aws_ec2_instance_service_user_sftp_directory $1 $AWS_EC2_INSTANCE_SFTP_GROUP_NAME
 }

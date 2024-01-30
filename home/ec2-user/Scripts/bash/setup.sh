@@ -17,9 +17,11 @@ source service/backup/function/create_iw_service_backup_script.sh
 ./firewall/install.sh
 ./maria/install.sh
 ./s3/install.sh
+./s3/configure.sh
 ./jdk/install.sh
 ./ldap/install.sh
 ./nginx/install.sh
+./certbot/install.sh
 ./openscap/install.sh
 
 #
@@ -27,7 +29,6 @@ source service/backup/function/create_iw_service_backup_script.sh
 #
 ./firewall/configure.sh
 ./sftp/configure.sh
-./s3/configure.sh
 ./ldap/configure.sh
 ./maria/configure.sh
 ./nginx/configure.sh
