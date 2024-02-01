@@ -1,7 +1,7 @@
 #!/bin/bash
 export IW_ALMA_CONFIGURATION_HOME=$HOME/aws-ec2-alma
 
-export readonly AWS_EC2_INSTANCE_ADMIN_USERNAME=idegaweb
+export readonly IW_ADMIN_USERNAME=idegaweb
 
 # SFTP
 export readonly AWS_EC2_INSTANCE_SFTP_GROUP_NAME=sftp

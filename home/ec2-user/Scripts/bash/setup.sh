@@ -9,6 +9,7 @@ source tomcat/function/create_iw_tomcat_service_root_configuration.sh
 source maria/function/create_iw_service_database.sh
 source nginx/function/copy_iw_app_nginx_configuration.sh
 source service/backup/function/create_iw_service_backup_script.sh
+source admin/function/create_iw_admin_user.sh
 
 #
 # Software installation
@@ -17,13 +18,13 @@ source service/backup/function/create_iw_service_backup_script.sh
 ./firewall/install.sh
 ./maria/install.sh
 ./s3/install.sh
-./s3/configure.sh
-./jdk/install.sh
 ./ldap/install.sh
 ./nginx/install.sh
 ./certbot/install.sh
 ./openscap/install.sh
 
+./s3/configure.sh
+./jdk/install.sh
 #
 # Software configuration
 #
@@ -37,7 +38,7 @@ source service/backup/function/create_iw_service_backup_script.sh
 #
 # Users
 #
-./admin/create.sh
+create_iw_admin_user $IW_ADMIN_USERNAME
 
 for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
 
