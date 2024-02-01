@@ -3,15 +3,15 @@
 # Functions
 #
 source variables/export.sh
-source service/user/function/set_aws_ec2_instance_service_user.sh
 source tomcat/function/download_iw_database_driver.sh
 source tomcat/function/download_iw_tomcat_server.sh
-source tomcat/function/copy_iw_tomcat_server_update_script.sh
+source tomcat/function/create_iw_tomcat_service_user.sh
+source tomcat/function/create_iw_tomcat_service_update_script.sh
 source tomcat/function/create_iw_tomcat_service_configuration.sh
 source tomcat/function/create_iw_tomcat_service_root_configuration.sh
-source maria/function/create_iw_service_database.sh
-source nginx/function/copy_iw_app_nginx_configuration.sh
 source service/backup/function/create_iw_service_backup_script.sh
+source maria/function/create_iw_service_database.sh
+source nginx/function/create_iw_service_domain_configuration.sh
 source admin/function/create_iw_admin_user.sh
 
 #
@@ -54,8 +54,8 @@ sudo systemctl restart slapd
 #
 # Service configuration
 #
-./firewall/configure.sh
 ./s3/configure.sh
+./firewall/configure.sh
 ./sftp/configure.sh
 ./ldap/configure.sh
 ./maria/configure.sh
@@ -82,35 +82,40 @@ echo "30 4 1 * * root certbot renew" | sudo tee --append /etc/crontab
 create_iw_admin_user $IW_ADMIN_USERNAME
 
 #
-# Service users
+# Applications
 #
 for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
 
     # Tomcat service user
-    set_aws_ec2_instance_service_user $iw_tomcat_service_user_name
+    create_iw_tomcat_service_user $iw_tomcat_service_user_name
 
     # Tomcat service
     download_iw_tomcat_server $iw_tomcat_service_user_name
     download_iw_database_driver $iw_tomcat_service_user_name
-    copy_iw_tomcat_server_update_script $iw_tomcat_service_user_name
+    create_iw_tomcat_service_update_script $iw_tomcat_service_user_name
     create_iw_tomcat_service_configuration $iw_tomcat_service_user_name
-    sudo systemctl enable $iw_tomcat_service_user_name
 
-    # MySQL database
+    # Tomcat service database
     export readonly IW_TOMCAT_SERVICE_DB_USER_NAME=$iw_tomcat_service_user_name
     export readonly IW_TOMCAT_SERVICE_DB_PASSWORD=$(openssl rand -base64 32)
-    create_iw_service_database
+
     create_iw_tomcat_service_root_configuration $iw_tomcat_service_user_name
+
+    create_iw_service_database
+
     create_iw_service_backup_script \
         $iw_tomcat_service_user_name \
         $IW_TOMCAT_SERVICE_DB_USER_NAME \
         $IW_TOMCAT_SERVICE_DB_USER_NAME \
         $IW_TOMCAT_SERVICE_DB_PASSWORD
+
     unset IW_TOMCAT_SERVICE_DB_USER_NAME
     unset IW_TOMCAT_SERVICE_DB_PASSWORD
 
-    # Tomcat domain
-    copy_iw_app_nginx_configuration $iw_tomcat_service_user_name
+    sudo systemctl enable $iw_tomcat_service_user_name
+
+    # Domain
+    create_iw_service_domain_configuration ${IW_TOMCAT_SERVICE_DOMAIN[$1]} ${IW_TOMCAT_SERVICE_PORT[$1]}
 
     # Certbot
     sudo certbot --nginx
