@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Functions
+#
 source variables/export.sh
 source service/user/function/set_aws_ec2_instance_service_user.sh
 source tomcat/function/download_iw_database_driver.sh
@@ -12,34 +15,75 @@ source service/backup/function/create_iw_service_backup_script.sh
 source admin/function/create_iw_admin_user.sh
 
 #
-# Software installation
+# Packages
 #
-./tools/install.sh
-./firewall/install.sh
-./maria/install.sh
-./s3/install.sh
-./ldap/install.sh
-./nginx/install.sh
-./certbot/install.sh
-./openscap/install.sh
+sudo yum -y install epel-release
+sudo yum -y install \
+    bc \
+    certbot python3-certbot-nginx \
+    elinks \
+    firewalld \
+    gettext \
+    git \
+    htop \
+    mariadb.x86_64 mariadb-common.x86_64 mariadb-server.x86_64 mariadb-server-utils.x86_64 mariadb-java-client.noarch mariadb-pam.x86_64 \
+    nginx \
+    npm \
+    openldap-servers.x86_64 openldap-clients.x86_64 openldap.x86_64 \
+    openscap openscap-scanner openscap-utils \
+    scap-security-guide \
+    screen \
+    s3cmd \
+    vim \
+    wget \
+    unzip
 
-./s3/configure.sh
-./jdk/install.sh
 #
-# Software configuration
+# Services
+#
+sudo systemctl enable firewalld
+sudo systemctl enable mariadb;
+sudo systemctl enable nginx
+sudo systemctl enable slapd
+
+sudo systemctl restart firewalld
+sudo systemctl restart mariadb;
+sudo systemctl restart nginx
+sudo systemctl restart slapd
+
+#
+# Service configuration
 #
 ./firewall/configure.sh
+./s3/configure.sh
 ./sftp/configure.sh
 ./ldap/configure.sh
 ./maria/configure.sh
 ./nginx/configure.sh
-./tomcat/configure.sh
+./jdk/install.sh
+
+#
+# SE Linux
+#
+sudo setsebool httpd_can_network_connect on
+sudo setsebool -P httpd_can_network_connect on
+
+sudo setsebool tomcat_can_network_connect_db on
+sudo setsebool -P tomcat_can_network_connect_db on
+
+#
+# Cron
+#
+echo "30 4 1 * * root certbot renew" | sudo tee --append /etc/crontab
 
 #
 # Users
 #
 create_iw_admin_user $IW_ADMIN_USERNAME
 
+#
+# Service users
+#
 for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do 
 
     # Tomcat service user
