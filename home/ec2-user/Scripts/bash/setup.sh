@@ -115,7 +115,7 @@ for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do
     sudo systemctl enable $iw_tomcat_service_user_name
 
     # Domain
-    create_iw_service_domain_configuration ${IW_TOMCAT_SERVICE_DOMAIN[$1]} ${IW_TOMCAT_SERVICE_PORT[$1]}
+    create_iw_service_domain_configuration ${IW_TOMCAT_SERVICE_DOMAIN[$iw_tomcat_service_user_name]} ${IW_TOMCAT_SERVICE_PORT[$iw_tomcat_service_user_name]}
 
     # Certbot
     sudo certbot --nginx
