@@ -23,7 +23,11 @@ function load_iw_ldap_service_conf() {
     sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
     sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/admin.ldif
     sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/domain.ldif;
-    sudo ldapadd -x -D cn=$IW_LDAP_SERVICE_ADMIN,dc=$IW_LDAP_SERVICE_SUBDOMAIN,dc=$IW_LDAP_SERVICE_DOMAIN,dc=$IW_LDAP_SERVICE_EXTENSION -W -f /etc/openldap/slapd.d/base.ldif
+    sudo ldapadd -x \
+        -D cn=$IW_LDAP_SERVICE_ADMIN,dc=$IW_LDAP_SERVICE_SUBDOMAIN,dc=$IW_LDAP_SERVICE_DOMAIN,dc=$IW_LDAP_SERVICE_EXTENSION \
+        -W \
+        -f /etc/openldap/slapd.d/base.ldif \
+        -y /etc/openldap/passwd.info
 }
 
 #

@@ -80,6 +80,7 @@ echo "30 4 1 * * root certbot renew" | sudo tee --append /etc/crontab
 # Users
 #
 create_iw_admin_user $IW_ADMIN_USERNAME
+sudo -u $IW_ADMIN_USERNAME mkdir -p /home/$IW_ADMIN_USERNAME/Services
 
 #
 # Applications
@@ -116,6 +117,8 @@ for iw_tomcat_service_user_name in "${IW_TOMCAT_SERVICE_USER_NAMES[@]}"; do
 
     # Domain
     create_iw_service_domain_configuration ${IW_TOMCAT_SERVICE_DOMAIN[$iw_tomcat_service_user_name]} ${IW_TOMCAT_SERVICE_PORT[$iw_tomcat_service_user_name]}
+
+    create_link_to_iw_service $iw_tomcat_service_user_name
 
     # Certbot
     sudo certbot --nginx

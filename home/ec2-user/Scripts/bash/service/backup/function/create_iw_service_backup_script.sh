@@ -13,6 +13,9 @@ function create_iw_service_backup_script() {
     envsubst '$iw_service_name,$iw_service_domain,$iw_db_name,$iw_db_user_name,$iw_db_user_pass' < $iw_backup_template_path > $iw_backup_generated_script_path
 
     sudo mkdir -p /home/$IW_ADMIN_USERNAME/Scripts
+    sudo chown -R $IW_ADMIN_USERNAME:$IW_ADMIN_USERNAME /home/$IW_ADMIN_USERNAME/Scripts
+    sudo restorecon -F -R /home/$IW_ADMIN_USERNAME/Scripts
+
     sudo mv $iw_backup_generated_script_path $iw_backup_script_path
     sudo chown $IW_ADMIN_USERNAME:$IW_ADMIN_USERNAME $iw_backup_script_path
     sudo chmod +x $iw_backup_script_path
