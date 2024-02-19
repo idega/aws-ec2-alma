@@ -9,6 +9,7 @@ source tomcat/function/create_iw_tomcat_service_user.sh
 source tomcat/function/create_iw_tomcat_service_update_script.sh
 source tomcat/function/create_iw_tomcat_service_configuration.sh
 source tomcat/function/create_iw_tomcat_service_root_configuration.sh
+source tomcat/function/create_link_to_iw_service.sh
 source service/backup/function/create_iw_service_backup_script.sh
 source maria/function/create_iw_service_database.sh
 source nginx/function/create_iw_service_domain_configuration.sh
