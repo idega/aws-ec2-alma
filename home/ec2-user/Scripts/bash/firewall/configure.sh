@@ -6,3 +6,5 @@ sudo firewall-cmd --add-service http
 sudo firewall-cmd --add-service http --permanent
 sudo firewall-cmd --add-service https
 sudo firewall-cmd --add-service https --permanent
+sudo firewall-cmd --add-port 8080-8099/tcp
+sudo firewall-cmd --add-port 8080-8099/tcp --permanent

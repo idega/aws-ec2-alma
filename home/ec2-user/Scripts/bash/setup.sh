@@ -34,6 +34,8 @@ sudo yum -y install \
     openscap openscap-scanner openscap-utils \
     scap-security-guide \
     screen \
+    s-nail \
+    sendmail \
     s3cmd \
     vim \
     wget \
