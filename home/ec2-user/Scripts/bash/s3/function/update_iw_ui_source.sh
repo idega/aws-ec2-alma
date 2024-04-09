@@ -1,7 +1,10 @@
 #!/bin/bash
 function update_iw_ui_source() {
     s3cmd put * s3://$1/ --recursive --cf-invalidate
-    aws s3api put-object --bucket $1 --key index.bundle.js --body index.bundle.js  --content-type application/javascript
-    aws s3api put-object --bucket $1 --key index.fonts.css --body index.fonts.css  --content-type text/css
-    aws s3api put-object --bucket $1 --key index.styles.css --body index.styles.css  --content-type text/css
+    gzip -9 index.bundle.js 
+    gzip -9 index.fonts.css
+    gzip -9 index.styles.css
+    aws s3api put-object --bucket $1 --key index.bundle.js --body index.bundle.js.gz  --content-type application/javascript --content-encoding gzip
+    aws s3api put-object --bucket $1 --key index.fonts.css --body index.fonts.css.gz  --content-type text/css --content-encoding gzip
+    aws s3api put-object --bucket $1 --key index.styles.css --body index.styles.css.gz  --content-type text/css --content-encoding gzip
 }
