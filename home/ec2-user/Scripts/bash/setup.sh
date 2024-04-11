@@ -32,6 +32,9 @@ sudo yum -y install \
     npm \
     openldap-servers.x86_64 openldap-clients.x86_64 openldap.x86_64 \
     openscap openscap-scanner openscap-utils \
+    pinentry.x86_64 \
+    policycoreutils-devel \
+    rpm-sign \
     scap-security-guide \
     screen \
     s-nail \

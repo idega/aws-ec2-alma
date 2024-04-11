@@ -31,4 +31,6 @@ EOF
 
 sudo restorecon -F $tomcat_service_configuration_file
 sudo systemctl daemon-reload
+
+# sepolicy generate --init /usr/local/bin/$1
 }

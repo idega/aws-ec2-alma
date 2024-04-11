@@ -14,6 +14,7 @@ function create_iw_tomcat_service_user() {
     # Password
     local password=$(date | base64)
     echo $password | sudo passwd $1 --stdin
+    sudo chage -M 3650 $1 # STIG
 
     # SSH access
     sudo cp -r $HOME/.ssh /opt/$1/
