@@ -7,6 +7,10 @@ sudo oscap xccdf eval \
     /usr/share/xml/scap/ssg/content/ssg-almalinux9-ds.xml
 
 #
+# Stig fails with Oracle JDK 8
+# 
+
+#
 # Can't remediate itself
 #
-authselect select sssd --force
+sudo authselect select sssd --force
