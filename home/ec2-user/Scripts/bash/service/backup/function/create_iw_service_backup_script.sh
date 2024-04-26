@@ -8,16 +8,16 @@ function create_iw_service_backup_script() {
 
     local iw_backup_template_path=$IW_ALMA_CONFIGURATION_HOME/opt/app/backup_iw_service.template.sh
     local iw_backup_generated_script_path=$IW_ALMA_CONFIGURATION_HOME/home/ec2-user/Scripts/bash/service/backup/backup_iw_service.$iw_service_name.sh
-    local iw_backup_script_path=/home/$IW_ADMIN_USERNAME/Scripts/backup_iw_service.$iw_service_name.sh
+    local iw_backup_script_path=/root/Scripts/backup_iw_service.$iw_service_name.sh
 
     envsubst '$iw_service_name,$iw_service_domain,$iw_db_name,$iw_db_user_name,$iw_db_user_pass' < $iw_backup_template_path > $iw_backup_generated_script_path
 
-    sudo mkdir -p /home/$IW_ADMIN_USERNAME/Scripts
-    sudo chown -R $IW_ADMIN_USERNAME:$IW_ADMIN_USERNAME /home/$IW_ADMIN_USERNAME/Scripts
-    sudo restorecon -F -R /home/$IW_ADMIN_USERNAME/Scripts
+    sudo mkdir -p /root/Scripts
+    sudo chown -R root:root /root/Scripts
+    sudo restorecon -F -R /root/Scripts
 
     sudo mv $iw_backup_generated_script_path $iw_backup_script_path
-    sudo chown $IW_ADMIN_USERNAME:$IW_ADMIN_USERNAME $iw_backup_script_path
+    sudo chown root:root $iw_backup_script_path
     sudo chmod +x $iw_backup_script_path
     sudo chmod o-rwx $iw_backup_script_path
     sudo restorecon -F -R $iw_backup_script_path

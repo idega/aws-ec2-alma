@@ -40,6 +40,7 @@ sudo yum -y install \
     s-nail \
     sendmail \
     s3cmd \
+    sshfs \
     vim \
     wget \
     unzip
