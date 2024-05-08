@@ -17,15 +17,33 @@ function iw_put_maven_artifact {
 }
 
 function iw_publish_maven_artifact {
+    # Removing suffix .jar or .pom
     local iw_maven_artifact_location="${1%.*}"
+
+    # Extracting exact filename, like commons.jar
     local iw_maven_artifact_file_name=${iw_maven_artifact_location##*/}
+
+    # Extracting path to file starting folder in maven repo. All paths should start with "repository/"
     local iw_maven_artifact_repo_path=${iw_maven_artifact_location#*repository/}
+
+    # Removing filename from repo path
     iw_maven_artifact_repo_path=${iw_maven_artifact_repo_path%/*}
-    local iw_maven_artifact_group_id=${iw_maven_artifact_repo_path%/*}
-    iw_maven_artifact_group_id=${iw_maven_artifact_group_id%/*}
-    iw_maven_artifact_group_id=${iw_maven_artifact_group_id//\//.}
-    local iw_maven_artifact_id=${iw_maven_artifact_file_name%-*}
-    local iw_maven_artifact_version=${iw_maven_artifact_file_name#*-}
+
+    # Extracting version number from repo path
+    local iw_maven_artifact_version=${iw_maven_artifact_repo_path##*/}
+
+    # Artifact path with no version
+    local iw_maven_artifact_artifact_path=${iw_maven_artifact_repo_path%/*}
+
+    # Artifact id from path
+    local iw_maven_artifact_id=${iw_maven_artifact_artifact_path##*/}
+
+    # Group path with no artifact name
+    local iw_maven_artifact_group_path=${iw_maven_artifact_artifact_path%/*}
+
+    # Formatting group name from group path
+    local iw_maven_artifact_group_id=${iw_maven_artifact_group_path//\//.}
+
 
     echo "Maven artifact path: $iw_maven_artifact_location"
     echo "Maven artifact filename: $iw_maven_artifact_file_name"
@@ -36,6 +54,7 @@ function iw_publish_maven_artifact {
 
     iw_put_maven_artifact $iw_maven_artifact_location.pom
     iw_put_maven_artifact $iw_maven_artifact_location.jar
+    iw_put_maven_artifact $iw_maven_artifact_location-sources.jar
 
     aws codeartifact update-package-versions-status \
         --domain $IW_CA_DOMAIN \
@@ -48,3 +67,6 @@ function iw_publish_maven_artifact {
         --target-status Published \
         --region $IW_CA_DOMAIN_REGION
 }
+
+
+
