@@ -19,7 +19,7 @@ lower_case_table_names=1
 #    Data Type: string
 #    Default Value: latin1_swedish_ci
 #
-collation_server=utf8mb4_general_ci
+collation_server=utf8mb4_unicode_ci
 
 #
 #    Description: Default character set used by the server. See character_set_database for character sets used by the default database. Defaults may be different on some systems, see for example Differences in MariaDB in Debian.
