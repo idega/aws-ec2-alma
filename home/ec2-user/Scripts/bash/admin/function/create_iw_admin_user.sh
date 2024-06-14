@@ -2,8 +2,7 @@
 function create_iw_admin_user() {
     sudo useradd $1
 
-    local password=$(date | base64)
-    echo $password | sudo passwd $1 --stdin
+    echo $(openssl rand -base64 16) | sudo passwd $1 --stdin
 
     sudo cp -r $HOME/.ssh /home/$1/
     sudo chown -R $1:$1 /home/$1/.ssh

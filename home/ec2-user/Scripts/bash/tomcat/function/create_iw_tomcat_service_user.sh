@@ -12,9 +12,7 @@ function create_iw_tomcat_service_user() {
     sudo usermod -aG $AWS_EC2_INSTANCE_SFTP_GROUP_NAME $1
 
     # Password
-    local password=$(date | base64)
-    echo $password | sudo passwd $1 --stdin
-    sudo chage -M 3650 $1 # STIG
+    echo "00 * * * * root echo \$(/bin/openssl rand -base64 16) | sudo /bin/passwd $1 --stdin" >> /etc/crontab
 
     # SSH access
     sudo cp -r $HOME/.ssh /opt/$1/
